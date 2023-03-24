@@ -2,19 +2,13 @@
 
 #include "AmFmRadio.h"
 
-/**
-* \brief AmFmRadio -- CONSTRUCTOR
-* \details <b>Details</b>
-*
-* To instantiate a new AmFmRadio object - given a set of attribute values
-*
-* It can be overloaded
-*
-* \param on  - <b>bool</b> - the status of radio's power
-*
-* \return Nothing
-*
-* \see ~AmFmRadio()
+/*  -- Method Header Comment
+	Name	: AmFmRadio -- CONSTRUCTOR
+	Purpose : To instantiate a new AmFmRadio object - given a set of attribute values
+			  It can be overloaded
+	Inputs	: on		bool		Bool sttus of power
+	Outputs	: NONE
+	Returns	: Nothing
 */
 AmFmRadio::AmFmRadio(bool on) {
 	// Initialization of Bool value.
@@ -46,19 +40,14 @@ AmFmRadio::AmFmRadio(bool on) {
 	displayOutput = false;
 }
 
-/**
-* \brief AmFmRadio -- CONSTRUCTOR
-* \details <b>Details</b>
-*
-* To instantiate a new AmFmRadio object - given a set of attribute values
-*
-* It can be overloaded
-*
-* \param on  - <b>bool</b> - the status of radio's power
-* \param button[kNUmberOfArray]  - <b>Freqs</b> - Array of struct value
-*
-* \return Nothing
-*
+/*  -- Method Header Comment
+	Name	: AmFmRadio -- CONSTRUCTOR
+	Purpose : To instantiate a new AmFmRadio object - given a set of attribute values
+			  It can be overloaded
+	Inputs	: on							bool		Bool status of power
+			  button[kNumberOfArray]		Freqs		Array of struct value
+	Outputs	: NONE
+	Returns	: Nothing
 */
 AmFmRadio::AmFmRadio(bool on, Freqs button[kNumberOfArray]) {
 	// Initialization of Bool value.
@@ -91,30 +80,25 @@ AmFmRadio::AmFmRadio(bool on, Freqs button[kNumberOfArray]) {
 	displayOutput = false;
 }
 
-/**
-* \brief AmFmRadio -- DESTRUCTOR
-*
-* Called upon to <i>destroy</i> a AmFmRadio object
-* \details <b>Details</b>
-*
-* To destroy the AmFmRadio object - free up the memory associated with the object
-*
-* \return Nothing
-*
+/*  -- Method Header Comment
+	Name	: AmFmRadio -- DESTRUCTOR
+	Purpose : To destroy the AmFmRadio object - free up the memory associated with the object
+	Inputs	: NONE
+	Outputs	: Outputs a final message from the object before being destroyed --> should be deleted
+	Returns	: Nothing
 */
 AmFmRadio::~AmFmRadio() {
 	//printf("Destorying AmFmRadio\n");
 }
 
-
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method switch value of <b>on</b>
-/// 
-/// Also it can store current frequency and volume into struct.
-///	\return Nothing
-/// 
+/*  -- Method Header Comment
+	Name	: PowerToggle
+	Purpose : to turn Radio power on or off
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: true		when it turns on
+			  false		when it turns off
+*/
 void AmFmRadio::PowerToggle(void) {
 	if (on == false) {
 
@@ -141,31 +125,27 @@ void AmFmRadio::PowerToggle(void) {
 }
 
 
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method can get value <b>on</b>
-/// 
-///	\return on - the status of radio's power
-/// 
+/*  -- Method Header Comment
+	Name	: IsRadioOn
+	Purpose : To check radio is on or off
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: on
+*/
 bool AmFmRadio::IsRadioOn(void) {
 	return on;
 }
 
 
-/// \brief Mutator
-/// \details <b>Details</b>
-///
-/// This method can set volume value
-/// 
-///	\return
-/// 	kOverLowVolRet(0) - when the insert volume is lower or the same as 0.
-/// 
-///		kVolRet(1) - when the insert volume is between 0 ~ 100
-/// 
-///		kOverMaxVolRet(2) - when the insert volume is biggner or the same as 100.
-/// 
-/// 
+/*  -- Method Header Comment
+	Name	: SetVolume
+	Purpose : To set radio's volume
+	Inputs	: NONE
+	Outputs	: Request volume which is user wants to change.
+	Returns	: kOverLowVolRet = 0	when the insert volume is lower or the same as 0.
+			  kOverMaxVolRet = 2	when the insert volume is biggner or the same as 100.
+			  kVolRet = 1			when the insert volume is between 0 ~ 100
+*/
 int AmFmRadio::SetVolume(void) {
 	if (on == true) {
 		char buf[kBuffer] = "";
@@ -191,20 +171,15 @@ int AmFmRadio::SetVolume(void) {
 	}
 }
 
-/// \brief Mutator
-/// \details <b>Details</b>
-///
-/// This method can set volume value
-/// 
-/// \param volume  - <b>int</b> - the volume to set data member(volume)
-///	\return
-/// 	kOverLowVolRet(0) - when the insert volume is lower or the same as 0.
-/// 
-///		kVolRet(1) - when the insert volume is between 0 ~ 100
-/// 
-///		kOverMaxVolRet(2) - when the insert volume is biggner or the same as 100.
-/// 
-/// 
+/*  -- Method Header Comment
+	Name	: SetVolume
+	Purpose : To set radio's volume
+	Inputs	: volume
+	Outputs	: Request volume which is user wants to change.
+	Returns	: kOverLowVolRet = 0	when the insert volume is lower or the same as 0.
+			  kOverMaxVolRet = 2	when the insert volume is biggner or the same as 100.
+			  kVolRet = 1			when the insert volume is between 0 ~ 100
+*/
 int AmFmRadio::SetVolume(int volume) {
 	this->volume = volume;
 
@@ -226,13 +201,13 @@ int AmFmRadio::SetVolume(int volume) {
 }
 
 
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method can switch band(AM -> FM or FM -> AN)
-/// 
-///	\return Nothing
-/// 
+/*  -- Method Header Comment
+	Name	: PowerToggle
+	Purpose : to change Band would be changed(AM -> FM or FM -> AM)
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: Nothing
+*/
 void AmFmRadio::ToggleBand(void) {
 	if (strcmp(band, "AM") == 0) {
 		strncpy(band, "FM", sizeof("FM"));
@@ -250,18 +225,14 @@ void AmFmRadio::ToggleBand(void) {
 }
 
 
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method can preset current_station as user wants
-/// 
-/// Stores the number received as a parameter in an array with an index.
-/// 
-/// \param button_num  - <b>int</b> - index number which is received.
-///	\return
-///		kRetNullPreButton(0) - When user inserts out of range index.
-/// 
-/// 	kRetPresetButton(1) - When user wants to change preset in struct array
+/*  -- Method Header Comment
+	Name	: SetPresetButton
+	Purpose : to change the preset changed as current_station as user wants
+	Inputs	: button_num				an index of struct array.
+	Outputs	: NONE
+	Returns	: kRetPresetButton = 1		When user wants to change preset in struct array
+			  kRetNullPreButton = 0		When user inserts out of range index.
+*/
 
 int AmFmRadio::SetPresetButton(int button_num) {
 	if ((button_num >= kMinRangeOfButton) && (button_num <= kMaxRangeOfButton)) {  // If the insert number is within a range
@@ -277,18 +248,14 @@ int AmFmRadio::SetPresetButton(int button_num) {
 }
 
 
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method can get current_station as user wants
-/// 
-/// It can change current_station value as channel from user
-/// 
-/// \param button_num  - <b>int</b> - index number which is received.
-///	\return
-///		kRetNullPreButton(0) - When user inserts out of range index.
-/// 
-/// 	kRetPresetButton(1) - When user wants to change preset in struct array
+/*  -- Method Header Comment
+	Name	: SelectPresetButton
+	Purpose : current frequeency is changed as element which is in button array
+	Inputs	: button_num				an index of struct array.
+	Outputs	: NONE
+	Returns	: kRetPresetButton = 1		When user wants to change preset in struct array
+			  kRetNullPreButton = 0		When user inserts out of range index.
+*/
 int AmFmRadio::SelectPresetButton(int button_num) {
 	if ((button_num >= kMinRangeOfButton) && (button_num <= kMaxRangeOfButton)) {		// If the insert number is within a range
 		if (strcmp("AM", band) == 0) {
@@ -304,20 +271,11 @@ int AmFmRadio::SelectPresetButton(int button_num) {
 
 /*  -- Method Header Comment
 	Name	: ScanUp
-	Purpose : When user select '7', current frequeency is going up with in a range as each amount of frequency (AM : 10, FM : 0.2)
+	Purpose : current frequeency is going up with in a range as each amount of frequency (AM : 10, FM : 0.2)
 	Inputs	: NONE
 	Outputs	: if displayOutput is true, display current band and frequency
 	Returns	: Nothing
 */
-
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method changes current frequency up within appropriate range.
-/// 
-/// AM - 10, FM - 0.2
-/// 
-///	\return Nothing
 void AmFmRadio::ScanUp(void) {
 	if (strcmp("AM", band) == 0) {
 		//if current_station is 1700, the current_station becomes 530
@@ -346,14 +304,13 @@ void AmFmRadio::ScanUp(void) {
 }
 
 
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method changes current frequencu down within appropriate range.
-/// 
-/// AM - 10, FM - 0.2
-/// 
-///	\return Nothing
+/*  -- Method Header Comment
+	Name	: ScanDown
+	Purpose : current frequeency is going down with in a range as each amount of frequency (AM : 10, FM : 0.2)
+	Inputs	: NONE
+	Outputs	: if displayOutput is true, display current band and frequency
+	Returns	: Nothing
+*/
 void AmFmRadio::ScanDown(void) {
 	if (strcmp("AM", band) == 0) {
 		//if current_station is 530, the current_station becomes 170
@@ -382,12 +339,13 @@ void AmFmRadio::ScanDown(void) {
 }
 
 
-/// \brief Method
-/// \details <b>Details</b>
-///
-/// This method shows all information of current setting status
-/// 
-///	\return Nothing
+/*  -- Method Header Comment
+	Name	: ShowCurrentSetting
+	Purpose : it prints all of information(band, volume, frequency, and preset)
+	Inputs	: NONE
+	Outputs	: Prints all of information(band, volume, frequency, and preset (both of AM and FM)
+	Returns	: Nothing
+*/
 void AmFmRadio::ShowCurrentSettings(void) {
 	if (on == true) {
 		printf("\n\nRadio is on. \n");
@@ -409,111 +367,106 @@ void AmFmRadio::ShowCurrentSettings(void) {
 	}
 }
 
-///
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting current_station and return it.
-/// 
-/// \return Returns current_station which is gotten from user as float type
-///
-///
+/*  -- Method Header Comment
+	Name	: GetCurrent_Station
+	Purpose : getting current_station and return it.
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: current_station		float		includes current frequency
+*/
 float AmFmRadio::GetCurrent_Station(void) {
 	return current_station;
 }
 
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting volume and return current volume
-/// 
-/// \return Returns volume which is gotten from user as int type
-///
-///
+/*  -- Method Header Comment
+	Name	: GetVolume
+	Purpose : getting volume and return current volume
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: volume		int			includes current volume
+*/
 int AmFmRadio::GetVolume(void) {
 	return volume;
 }
 
 
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting on bool vaule and return current on bool vaule
-/// 
-/// \return Returns on which is gotten from user as bool type
-///
-///
+/*  -- Method Header Comment
+	Name	: GetOn
+	Purpose : getting on bool vaule and return current on bool vaule
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: on		bool		includes current on bool vaule
+*/
 bool AmFmRadio::GetOn(void) {
 	return on;
 }
 
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting band string and return band string
-/// 
-/// \return Returns bandCopy which is gotten from user as char* type
-///
-///
+/*  -- Method Header Comment
+	Name	: GetBandName
+	Purpose : getting band string and return band string
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: bandCopy		char*		string of band
+*/
 char* AmFmRadio::GetBandName(void) {
 	memcpy(bandCopy, band, sizeof(band));
 	return bandCopy;
 }
 
 
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting display bool value and display bool value
-/// 
-/// \return Returns displayOutput which is gotten from user as bool type
-///
+/*  -- Method Header Comment
+	Name	: GetDIsplyOutput
+	Purpose : getting display bool value and display bool value
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: displayOutput			bool		display bool value
+*/
 bool AmFmRadio::GetDisplayOutput(void) {
 	return displayOutput;
 }
 
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting an array which has struct
-/// 
-/// \return Returns button[button_num] which is gotten from user as array of struct type
-///
+/*  -- Method Header Comment
+	Name	: GetButton
+	Purpose : return an array which has struct
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: button[button_num]		Freqs(struct)		an array which has struct
+*/
 Freqs AmFmRadio::GetButton(int button_num) {
 	return button[button_num];
 }
 
 
-/// \brief Accessor
-/// \details <b>Details</b>
-///
-/// Getting struct which has information of current status to save lastest information
-/// 
-/// \return Returns rememberStatus which is gotten from user as struct type
-///
+/*  -- Method Header Comment
+	Name	: GetRememberStatus
+	Purpose : return struct which has information of current status to save lastest information
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: rememberStatus		Freqs(struct)		current information
+*/
 Freqs AmFmRadio::GetRememberStatus(void) {
 	return rememberStatus;
 }
 
 
-/// \brief Mutator
-/// \details <b>Details</b>
-///
-/// A mutator to save current_station in private data member.
-/// 
-/// \return Nothing
-///
+/*  -- Method Header Comment
+	Name	: SetCurrentStation
+	Purpose : A mutator to save current_station in private data member.
+	Inputs	: current_station
+	Outputs	: NONE
+	Returns	: Nothing
+*/
 void AmFmRadio::SetCurrentStation(float current_station) {
 	this->current_station = current_station;
 }
 
-/// \brief Mutator
-/// \details <b>Details</b>
-///
-/// A mutator to save displayOutput in private data member.
-/// 
-/// \return Nothing
-///
+/*  -- Method Header Comment
+	Name	: SetDisplayOutput
+	Purpose : A mutator to save displayOutput in private data member.
+	Inputs	: displayOutput
+	Outputs	: NONE
+	Returns	: Nothing
+*/
 void AmFmRadio::SetDisplayOutput(bool displayOutput) {
 	this->displayOutput = displayOutput;
 }

@@ -1,4 +1,3 @@
-#pragma once
 // AmFmRadio.h
 #pragma once
 #include <stdio.h>
@@ -31,11 +30,12 @@ using namespace std;
 #define kOverMaxVolRet		2
 #define kVolRet				1
 
-/// \brief This structure is a structure that stores information desired by the user.
-/// 
-/// Also, previous data can be stored, it can be called to when radio's power is <i>on/off</i>
-/// 
-/// \author A <i>Minchul Hwang</i>
+/*
+	-* Struct COMMENT *-
+	NAME    : Freqs
+	PURPOSE : This structure is a structure that stores information desired by the user.
+			  Also, previous data can be stored.
+*/
 struct Freqs {
 	int		AMFreqs;						///< it can store AM Frequency
 	float	FMFreqs;						///< It can store FM Frequency
@@ -43,15 +43,13 @@ struct Freqs {
 	char	rememberBand[kBandName];		///< IT can store Band
 };
 
-/// \class AmFmRadio
-///
-/// \brief The purpose of This class creates an AmFmRadio object. 
-/// 
-/// It can show the current radio status, and set the preset of frequency.
-/// 
-/// also this Class is parent class of PioneerCarRadio class
-///
-/// \author A <i>Minchul Hwang</i>
+/*
+	-* CLASS COMMENT *-
+	NAME    : AmFmRadio
+	PURPOSE : This class creates an object that
+			  proceeds with the program according to the number pressed by the user in the menu.
+			  There are 9 buttons(power, band change, scan up, scan down etc), each button follows below methods
+*/
 class AmFmRadio {
 	/* ====================================== */
 	/*              PRIVATE                   */
@@ -86,11 +84,11 @@ public:
 	bool IsRadioOn(void);							///< Status of radio power
 	int SetVolume(void);							///< Sets volume
 	int SetVolume(int volume);						///< Sets volume with parameter
-	void ToggleBand(void);							///< Toggles frequency between AM and FM and sets current station
+	virtual void ToggleBand(void);							///< Toggles frequency between AM and FM and sets current station
 	int SetPresetButton(int button_num);			///< Sets button (radio preset) with current station by being passed a button number
 	int SelectPresetButton(int button_num);			///< Sets current station to radio preset by being passed a button number
-	void ScanUp(void);								///< Changes frequency up in increments of .2 for FM, 10 for AM
-	void ScanDown(void);							///< Changes frequency down in increments of .2 for FM, 10 for AM
+	virtual void ScanUp(void);								///< Changes frequency up in increments of .2 for FM, 10 for AM
+	virtual void ScanDown(void);							///< Changes frequency down in increments of .2 for FM, 10 for AM
 	void ShowCurrentSettings(void);					///< Shows volume, button settings, current station, AM or FM
 
 	float GetCurrent_Station(void);					///< Accessor - current_station
