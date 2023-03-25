@@ -1,4 +1,3 @@
-#pragma once
 // PioneerCarRadio.h
 #pragma once
 
@@ -18,17 +17,16 @@ using namespace std;
 #define kThreeIndex		3
 #define kFourIndex		4
 #define kBreakValue		1
+#define kClassName		10
 
-/// \class ProneerCarRadio
-///
-/// \brief The purpose of This class creates an object that inherited from AmFmRadio class, 
-/// 
-/// it uses methods from AmFmRadio, some overriding method is used to save value in own data member. 
-/// 
-/// also showing information of current status.
-///
-/// \author A <i>Minchul Hwang</i>
 
+/*
+	-* CLASS COMMENT *-
+	NAME    : PioneerCarRadio
+	PURPOSE : This class creates an object that
+			  proceeds with the program according to the number pressed by the user in the menu.
+			  The methods are inherited from parent class
+*/
 class PioneerCarRadio : public AmFmRadio {
 	/* ====================================== */
 	/*              PRIVATE                   */
@@ -39,21 +37,30 @@ private:
 	int volume;								///< To store the volume
 	float current_station;					///< To get current station
 	char band[kBandName];					///< To store the band name
-
+	bool exit;
+	bool displayOutput;
+	char className[kClassName];
+	char classNameCopy[kClassName];
 public:
 	/* ====================================== */
 	/*              PUBLIC                    */
 	/* ====================================== */
 	PioneerCarRadio(bool on);				///< Constructor with bool parameters
-	~PioneerCarRadio();						///< DIstructor of object
+	virtual ~PioneerCarRadio();						///< DIstructor of object
 
 	void ShowCurrentSettings(void);			///< This method can show current status.
-	int CurrentStatus(void);				///< It can check current radio status
-	void DivisionChar(char getChar);		///< This method can divide a character of keystrokes
+	virtual void CurrentStatus(void);				///< It can check current radio status
+	void ProcessUserKeyStroke(char getChar);		///< This method can divide a character of keystrokes
 
 	char GetChar(void);						///< Accessor - to get char from user as keystroke
 	float GetCurrent_Station(void);			///< Accessor - to get current station from AmFmRadio class
 	char* GetBandName(void);				///< Accessor - to get band name from AmFmRadio class
+	bool GetOn(void);
+	bool GetExit(void);						///< Accessor - to get bool value which can figure out break
+	void SetExit(bool exit);
+	void SetDisplayOutput(bool displayOutput);		///< Mutator - to set displayOutput value which can control AmFmRadio class
+	char* GetClassName(void);
+	void SetClassName(char* className);
 };
 
 
