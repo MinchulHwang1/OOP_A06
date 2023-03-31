@@ -84,7 +84,7 @@ public:
 	bool IsRadioOn(void);							///< Status of radio power
 	int SetVolume(void);							///< Sets volume
 	int SetVolume(int volume);						///< Sets volume with parameter
-	virtual void ToggleBand(void);							///< Toggles frequency between AM and FM and sets current station
+	virtual void ToggleFrequency(void);							///< Toggles frequency between AM and FM and sets current station
 	int SetPresetButton(int button_num);			///< Sets button (radio preset) with current station by being passed a button number
 	int SelectPresetButton(int button_num);			///< Sets current station to radio preset by being passed a button number
 	virtual void ScanUp(void);								///< Changes frequency up in increments of .2 for FM, 10 for AM

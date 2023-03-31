@@ -5,7 +5,7 @@
 /*  -- Method Header Comment
 	Name	: PioneerCarRadio -- CONSTRUCTOR
 	Purpose : To instantiate a new PioneerCarRadio object - given a set of attribute values, and inherited from AmFmRadio class
-	Inputs	: on		bool		Bool sttus of power
+	Inputs	: on		bool		Bool status of power
 	Outputs	: NONE
 	Returns	: Nothing
 */
@@ -30,7 +30,7 @@ PioneerCarRadio::PioneerCarRadio(bool on) : AmFmRadio(false) {
 	Returns	: Nothing
 */
 PioneerCarRadio::~PioneerCarRadio() {
-	printf("PioneerCarRadio is destroyed\n");
+	printf("Destroying Pioneer XS440%s\n", GetClassName());
 }
 
 
@@ -147,7 +147,7 @@ void PioneerCarRadio::ProcessUserKeyStroke(char getChar) {
 
 	case 'b':
 		if (on == true) 
-			ToggleBand();
+			ToggleFrequency();
 		break;
 		
 
@@ -255,6 +255,13 @@ char* PioneerCarRadio::GetBandName(void) {
 	return band;
 }
 
+/*  -- Method Header Comment
+	Name	: GetOn
+	Purpose : getting on bool vaule and return current on bool vaule
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: on		bool		includes current on bool vaule
+*/
 bool PioneerCarRadio::GetOn(void) {
 	return on;
 }
@@ -270,9 +277,17 @@ bool PioneerCarRadio::GetExit(void) {
 	return exit;
 }
 
+/*  -- Method Header Comment
+	Name	: SetExit
+	Purpose : Set bool value exit
+	Inputs	: exit			bool		exit value which break loop
+	Outputs	: Nothing
+	Returns	: nothing
+*/
 void PioneerCarRadio::SetExit(bool exit) {
 	this->exit = exit;
 }
+
 /*  -- Method Header Comment
 	Name	: SetDisplayOutput
 	Purpose : Set bool value displayOutpur which can control AmFmRadio class
@@ -284,11 +299,26 @@ void PioneerCarRadio::SetDisplayOutput(bool displayOutput) {
 	AmFmRadio::SetDisplayOutput(displayOutput);
 }
 
+/*  -- Method Header Comment
+	Name	: GetClassName
+	Purpose : Get class name as string
+	Inputs	: Nothing
+	Outputs	: Nothing
+	Returns	: calssNameCopy		char*		string stored copied class name
+*/
 char* PioneerCarRadio::GetClassName(void) {
 	memcpy(classNameCopy, className, sizeof(className));
 	return classNameCopy;
 
 }
+
+/*  -- Method Header Comment
+	Name	: SetClassName
+	Purpose : Set class name as string
+	Inputs	: className			char*		a string of class name
+	Outputs	: Nothing
+	Returns	: nothing
+*/
 void PioneerCarRadio::SetClassName(char* className) {
 	strncpy(this->className, className, sizeof(className));
 }

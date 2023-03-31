@@ -202,13 +202,13 @@ int AmFmRadio::SetVolume(int volume) {
 
 
 /*  -- Method Header Comment
-	Name	: PowerToggle
+	Name	: ToggleBand
 	Purpose : to change Band would be changed(AM -> FM or FM -> AM)
 	Inputs	: NONE
 	Outputs	: NONE
 	Returns	: Nothing
 */
-void AmFmRadio::ToggleBand(void) {
+void AmFmRadio::ToggleFrequency(void) {
 	if (strcmp(band, "AM") == 0) {
 		strncpy(band, "FM", sizeof("FM"));
 		rememberStatus.AMFreqs = current_station;

@@ -1,5 +1,5 @@
 #pragma once
-
+// PioneerWorld.h
 #ifndef _PIONEERWORLD_H
 #define _PIONEERWORLD_H
 #include "PioneerAM.h"
@@ -12,38 +12,236 @@
 #define kWorldMaxRange		1602
 #define kWorldMinRange		531
 #define kWorldFreqRange		9
+
 /*
-Except that the AM band range is 531 kHz to 1602 kHz (instead of the 530 kHz to 1700 kHz range)
-And the interval between frequencies is 9 kHz, not 10 kHz
-So scanning up from 531 would bring you to 540, then 549, etc. Wrapping from 1602 brings you to 531.
+	-* CLASS COMMENT *-
+	NAME    : PioneerWorld
+	PURPOSE : This class creates an object that
+			  proceeds with the program according to the number pressed by the user in the menu.
+			  The methods are inherited from parent class
+			  It only acts in AM frequency and different range of frequency
 */
 class PioneerWorld : public PioneerAM {
 private:
+	/* ====================================== */
+	/*              PRIVATE                   */
+	/* ====================================== */
 	char getChar;							///< To save character which is gotten from user to choose menu
 	bool on;								///< To store the status of radio power
 	int volume;								///< To store the volume
 	float current_station;					///< To get current station
-	float current_stationCopy;
 	char band[kBandName];					///< To store the band name
-	bool exit;
+	bool exit;								///< To store exit value to break loop
 
 public :
-	PioneerWorld(bool on);
-	virtual ~PioneerWorld();
+	/* ====================================== */
+	/*              PUBLIC                    */
+	/* ====================================== */
 
-	// ScanUp/Down
-	void ShowCurrentSettings(void);			///< This method can show current status.
-	void CurrentStatus(void);				///< It can check current radio status
-	void ProcessUserKeyStroke(char getChar);		///< This method can divide a character of keystrokes
-	int GetVolume(void);
-	bool GetOn(void);
-	char GetChar(void);						///< Accessor - to get char from user as keystroke
-	float GetCurrent_Station(void);			///< Accessor - to get current station from AmFmRadio class
-	char* GetBandName(void);				///< Accessor - to get band name from AmFmRadio class
-	void ScanUp(void);
-	void ScanDown(void);
-	void SetPresetButton(int button_num);
-	//void SelectPresetButton(int button_num);
-	void SetCurrentStation(float current_station);
+	/*  -- Method Header Comment
+	Name	: PioneerWorld-- CONSTRUCTOR
+	Purpose : To instantiate a new PioneerWorld object - given a set of attribute values, and inherited from AmFmRadio class, PioneerCarRadio class, and PioneerAM class
+	Inputs	: on		bool		Bool status of power
+	Outputs	: NONE
+	Returns	: Nothing
+	*/
+	PioneerWorld(bool on) : PioneerAM(false) {
+		getChar = 'x';
+		this->on = on;
+		exit = false;
+		volume = kZeroValue;
+		current_station = kWorldMinRange;
+		strncpy(band, "AM", sizeof("AM"));
+	};
+
+	/*  -- Method Header Comment
+	Name	: PioneerWorld -- DESTRUCTOR
+	Purpose : To destroy the PioneerWorld object - free up the memory associated with the object
+	Inputs	: NONE
+	Outputs	: Outputs a final message from the object before being destroyed
+	Returns	: Nothing
+	*/
+	virtual ~PioneerWorld() {};
+
+	/*  -- Method Header Comment
+	Name	: ShowCurrentSetting
+	Purpose : it prints all of information(band, volume, frequency, and preset). it is overriding method in AmFmRadio class, PioneerCarRadio class, and PioneerAM class
+	Inputs	: NONE
+	Outputs	: Prints all of information(band, volume, frequency, and preset (AM)
+	Returns	: Nothing
+	*/
+	void ShowCurrentSettings(void) {
+		printf("Volume: %d\n", GetVolume());
+		if (strcmp(GetBandName(), "AM") == 0) {
+			printf("Current Station: %d %s\n", (int)GetCurrent_Station(), GetBandName());
+		}
+
+		printf("AM Buttons:\n");
+		for (int i = kZeroValue; i < kNumberOfArray - 1; ++i) {
+			printf("%d) %6d,  ", i + 1, GetButton(i).AMFreqs);
+		}
+		printf("%d) %6d", kNumberOfArray, GetButton(kNumberOfArray - 1).AMFreqs);
+	};
+
+	/*  -- Method Header Comment
+	Name	: CurrentStatus
+	Purpose : it prints current radio's status, and it can get character from user to set key stroke
+	Inputs	: NONE
+	Outputs	: Prints radio's power status
+	Returns	: Nothing
+	*/
+	void CurrentStatus(void) {
+		on = GetOn();
+
+		// Set initialization of frequency
+		if (PioneerCarRadio::GetCurrent_Station() == kMinAMFreqs) {
+			SetCurrentStation(current_station);
+			for (int i = kZeroValue; i < kNumberOfArray; i++) {
+				SetPresetButton(i);
+			}
+		}
+
+		if (on == false) {
+			printf("Pioneer XS440-WRLD\n");
+			printf("Radio is off\n\n");
+		}
+		else {
+
+			printf("Pioneer XS440-WRLD\n");
+			printf("Radio is on\n");
+			ShowCurrentSettings();
+			printf("\n\n");
+		}
+	};
+
+	/*  -- Method Header Comment
+	Name	: ProcessUserKeyStroke
+	Purpose : it divides key stroke gotten from user. Overriding from parent class
+	Inputs	: getChar		char		the character from user
+	Outputs	: Nothing
+	Returns	: Nothing
+	*/
+	void ProcessUserKeyStroke(char getChar) {
+		if (getChar == '=') {
+			if (on == true) {
+				ScanUp();
+			}
+		}
+		else if (getChar == '-') {
+			if (on == true) {
+				ScanDown();
+			}
+		}
+		else
+			PioneerCarRadio::ProcessUserKeyStroke(getChar);
+	};
+
+	/*  -- Method Header Comment
+	Name	: ScanUp
+	Purpose : current frequeency is going up with in a range as each amount of frequency in AM band(9), this method is overriding AmFmRadio class
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: Nothing
+	*/
+	void ScanUp(void){
+		if (current_station == kWorldMaxRange) {
+			current_station = kWorldMinRange;
+		}
+		else {
+			current_station = current_station + kWorldFreqRange;
+		}
+		SetCurrentStation(current_station);
+	};
+
+	/*  -- Method Header Comment
+	Name	: ScanDown
+	Purpose : current frequeency is going down with in a range as each amount of frequency in AM band(9), this method is overriding AmFmRadio class
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: Nothing
+	*/
+	void ScanDown(void) {
+		if (current_station == kWorldMinRange) {
+			current_station = kWorldMaxRange;
+		}
+		else {
+			current_station = current_station - kWorldFreqRange;
+		}
+		SetCurrentStation(current_station);
+	};
+
+	/*  -- Method Header Comment
+	Name	: GetVolume
+	Purpose : getting volume and return current volume, it get volume from parent class
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: volume		int			includes current volume
+	*/
+	int GetVolume(void) {
+		volume = PioneerCarRadio::GetVolume();
+		return volume;
+	};
+
+	/*  -- Method Header Comment
+	Name	: GetOn
+	Purpose : getting on bool vaule and return current on bool vaule. it gets value from paraent class(AmFmRadio class)
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: on		bool		includes current on bool vaule
+	*/
+	bool GetOn(void) {
+		on = PioneerAM::GetOn();
+		return on;
+	};
+				
+	/*  -- Method Header Comment
+	Name	: GetCurrent_Station
+	Purpose : Get current station of radio from it's parent's class(AmFmRadio class)
+	Inputs	: Nothing
+	Outputs	: Nothing
+	Returns	: current_station		float		current station frequency
+	*/
+	float GetCurrent_Station(void) {
+		current_station = PioneerCarRadio::GetCurrent_Station();
+		return current_station;
+	};
+
+	/*  -- Method Header Comment
+	Name	: GetBandName
+	Purpose : Get band name from parent's class(AmFmRadio.class)
+	Inputs	: Nothing
+	Outputs	: Nothing
+	Returns	: band		char*		a pointer of band name
+	*/
+	char* GetBandName(void) {
+		memcpy(band, AmFmRadio::GetBandName(), sizeof(band));
+		if (strcmp(band, "AM") == 0) {
+			ToggleFrequency();
+		}
+		return band;
+	};
+
+	/*  -- Method Header Comment
+	Name	: SetPresetButton
+	Purpose : Set all initial station in 531 KHZ using method AmFmRadio method
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: Nothing
+	*/
+	void SetPresetButton(int button_num) {
+		SetCurrentStation(kWorldMinRange);
+		AmFmRadio::SetPresetButton(button_num);
+	};
+
+	/*  -- Method Header Comment
+	Name	: SetCurrentStation
+	Purpose : Set current station as user want to put, it is overriding PioneerCarRadio class
+	Inputs	: NONE
+	Outputs	: NONE
+	Returns	: Nothing
+	*/
+	void SetCurrentStation(float current_station) {
+		PioneerCarRadio::SetCurrentStation(current_station);
+	};
 };
 #endif _PIONEERWORLD_H
